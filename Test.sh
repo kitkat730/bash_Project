@@ -12,6 +12,8 @@ function TakeTest()
     done  
 }
 
+
+
 function Display()
 {
    while (($nTime < 10))
