@@ -2,17 +2,25 @@ username=""
 password=""
 
 nTime=0
-
 function TakeTest()
 {
     for nTime in {1..10}
     do 
+      clear
       echo "Time remaining : $nTime seconds"
       sleep 1
     done  
 }
 
-
+function Display()
+{
+   while (($nTime < 10))
+   do
+   echo "HI"
+   sleep 1
+   done
+   #read -p "Enter username : " user_name
+}
 
 function Display_CommandLineTest()
 {
@@ -27,7 +35,7 @@ function Display_CommandLineTest()
 
     case $val_input in
     "1")
-       TakeTest;;
+       Display & TakeTest;;
     "2")
        echo  "2";;
     "3")
