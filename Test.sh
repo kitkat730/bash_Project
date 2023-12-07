@@ -1,15 +1,58 @@
 username=""
 password=""
 
-nTime=0
+question_Path="./question.txt"
+AnsFile_Path="./Answer.txt"
+
+
+function writeAnsToFile()
+{
+     arr=("$@")
+     if [ -e $AnsFile_Path ]
+     then 
+        cat >>$AnsFile_Path <<< "${arr[@]}"
+     fi
+}
+
 function TakeTest()
 {
-    for nTime in {1..10}
-    do 
-      clear
-      echo "Time remaining : $nTime seconds"
-      sleep 1
-    done  
+   #  for nTime in {1..10}
+   #  do 
+   #    clear
+   #    echo "Time remaining : $nTime seconds"
+   #    sleep 1
+   #  done  
+
+
+   nstartLine=1
+   nEndLine=6
+   nIndex=1
+   #sed -n '1,6p' $question_Path
+
+   declare -a Ans_Array
+
+   Ans_Array[0]=$username
+
+   for nQuestion in {1..10}
+   do
+     sed -n "${nstartLine},${nEndLine}p" $question_Path
+     echo
+     read -p "Choose your option : " ans
+     echo 
+     nstartLine=$((nEndLine+2))
+     nEndLine=$((nstartLine+5))
+     Ans_Array[nIndex]=$ans
+     ((nIndex++))
+   done  
+
+   if ((${#Ans_Array[@]}))
+   then 
+      writeAnsToFile "${Ans_Array[@]}"
+   else
+      echo "Something went wrong!"
+   fi   
+
+   #echo "${Ans_Array[@]}"
 }
 
 
@@ -37,7 +80,7 @@ function Display_CommandLineTest()
 
     case $val_input in
     "1")
-       Display & TakeTest;;
+       TakeTest;;
     "2")
        echo  "2";;
     "3")
